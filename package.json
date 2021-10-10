@@ -13,7 +13,10 @@
     "rxjs": "7.4.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.6.1"
+    "parcel-bundler": "^1.6.1",
+    "tailwindcss": "^2.2.15",
+    "postcss-import": "^14.0.2",
+    "autoprefixer": "^10.3.7"
   },
   "keywords": []
 }
