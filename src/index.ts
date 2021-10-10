@@ -124,8 +124,8 @@ const doIt = () => {
             <div>
               ${getStationByCode(messwert.station).kurzname}
             </div>
-            <div>
-              ${messwert.komponente}: ${mittelwert.toFixed(2).toString()} µg/m2
+            <div class="text-2xl">
+              ${messwert.komponente}: ${mittelwert.toFixed(2).toString()} µg/m²
             </div>
           `;
 
