@@ -195,3 +195,19 @@ components$
     })
   )
   .subscribe();
+
+Array.from(stationSelect.options).forEach((item) => {
+  console.log(item.value === station);
+  if (item.value === station) {
+    item.selected = true;
+  }
+});
+
+Array.from(componentSelect.options).forEach((item) => {
+  console.log(item.value === station);
+  if (item.value === component) {
+    item.selected = true;
+  }
+});
+
+doIt();
