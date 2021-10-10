@@ -1,0 +1,2 @@
+# jahresmittelwert
+Created with CodeSandbox
