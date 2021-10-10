@@ -1,0 +1,19 @@
+{
+  "name": "jahresmittelwert",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "date-fns": "2.25.0",
+    "firebase": "9.1.2",
+    "rxjs": "7.4.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.6.1"
+  },
+  "keywords": []
+}

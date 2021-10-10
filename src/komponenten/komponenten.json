@@ -1,0 +1,30 @@
+{
+  "komponenten": [
+    { "code": "PM10kont", "bezeichnung": "Feinstaub" },
+    { "code": "PM25kont", "bezeichnung": "Feinstaub" },
+    { "code": "GSTR", "bezeichnung": "Globalstrahlung" },
+    { "code": "HGT", "bezeichnung": "Heizgradtage" },
+    { "code": "CO", "bezeichnung": "Kohlenmonoxid" },
+    { "code": "LichtMag", "bezeichnung": "Licht Magnitude" },
+    { "code": "LichtMagT", "bezeichnung": "Licht Magnitude Tagesmittelwert" },
+    { "code": "LUFTD0", "bezeichnung": "Luftdruck 0m" },
+    { "code": "TEMP", "bezeichnung": "Lufttemperatur" },
+    { "code": "LichMAu00", "bezeichnung": "Mondaufgang" },
+    { "code": "LichMPhas", "bezeichnung": "Mondphase" },
+    { "code": "LichMUn00", "bezeichnung": "Monduntergang" },
+    { "code": "O3", "bezeichnung": "Ozon" },
+    { "code": "PM1kont", "bezeichnung": "PM1kont Grimm" },
+    { "code": "RM", "bezeichnung": "Regenmenge" },
+    { "code": "RF", "bezeichnung": "Relative Feuchte" },
+    { "code": "SO2", "bezeichnung": "Schwefeldioxid" },
+    { "code": "H2S", "bezeichnung": "Schwefelwasserstoff" },
+    { "code": "SONNE", "bezeichnung": "Sonnenscheindauer" },
+    { "code": "NO2", "bezeichnung": "Stickstoffdioxid" },
+    { "code": "NO", "bezeichnung": "Stickstoffmonoxid" },
+    { "code": "STRB", "bezeichnung": "Strahlungsbilanz" },
+    { "code": "UVB", "bezeichnung": "Ultraviolete Str. B" },
+    { "code": "BOE", "bezeichnung": "Windböe" },
+    { "code": "WIV", "bezeichnung": "Windgeschwindigkeit" },
+    { "code": "WIR", "bezeichnung": "Windrichtung" }
+  ]
+}

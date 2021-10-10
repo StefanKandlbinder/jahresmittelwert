@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind-dark.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="flex flex-col h-full bg-yellow-500">
+    <button
+      id="buttonFrom"
+      class="bg-blue-600 hover:bg-blue-700 text-white py-4 border-b align-center justify-center flex w-full"
+    >
+      Yearly Mean
+    </button>
+    <div
+      class="flex flex-col justify-center items-center flex-grow text-white text-lg"
+      id="mean"
+    ></div>
+    <pre style="position: absolute; top: 5rem;"><code id="result"></code></pre>
+    <script src="src/index.ts"></script>
+  </body>
+</html>
