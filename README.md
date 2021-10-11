@@ -1,2 +1,3 @@
 # jahresmittelwert
-Created with CodeSandbox
+
+Jahres- und Monatsmittelwerte der offiziellen Luftgüte-Messstationen in Oberösterreich
