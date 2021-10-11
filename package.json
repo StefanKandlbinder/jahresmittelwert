@@ -14,8 +14,7 @@
   "devDependencies": {
     "parcel": "^2.0.0-rc.0",
     "tailwindcss": "^2.2.15",
-    "postcss-import": "^14.0.2",
-    "autoprefixer": "^10.3.7"
+    "postcss-import": "^14.0.2"
   },
   "keywords": []
 }

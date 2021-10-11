@@ -26,7 +26,7 @@ const getDates = () => {
   let dates = [];
   const date = new Date();
   // const daysOfYear = getDayOfYear(date) - 1;
-  const daysOfYear = 10;
+  const daysOfYear = 1;
 
   for (let i = 0; i < daysOfYear; i++) {
     let dateTo = new Intl.DateTimeFormat("en-GB").format(
@@ -201,14 +201,12 @@ components$
   .subscribe();
 
 Array.from(stationSelect.options).forEach((item) => {
-  console.log(item.value === station);
   if (item.value === station) {
     item.selected = true;
   }
 });
 
 Array.from(componentSelect.options).forEach((item) => {
-  console.log(item.value === station);
   if (item.value === component) {
     item.selected = true;
   }
