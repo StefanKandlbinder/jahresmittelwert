@@ -5,7 +5,7 @@ import { from, fromEvent } from "rxjs";
 import { concatMap, map, reduce } from "rxjs/operators";
 import { writeStationsData, init } from "./firebase";
 
-import { Messwert } from "./messwert";
+import { Messwert } from "./messwert/messwert";
 import { Station } from "./stationen/station";
 import { getStationByCode, getStationsAir } from "./stationen/utilities";
 

@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "parcel": "^2.0.0-rc.0",
+    "parcel/transformer-css": "2.0.0-alpha.3",
+    "parcel/transformer-postcss": "2.0.0-alpha.3",
     "tailwindcss": "^2.2.15",
     "postcss-import": "^14.0.2"
   },
