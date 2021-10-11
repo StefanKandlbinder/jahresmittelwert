@@ -118,7 +118,7 @@ const doIt = () => {
           count++;
 
           meanView.innerHTML = `
-            <div class="transform -translate-y-12">
+            <div class="transform -translate-y-12 text-center">
               <div>
                 ${messwert.station}
               </div>
