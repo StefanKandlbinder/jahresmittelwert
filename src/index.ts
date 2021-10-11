@@ -118,14 +118,18 @@ const doIt = () => {
           count++;
 
           meanView.innerHTML = `
-            <div>
-              ${messwert.station}
-            </div>
-            <div>
-              ${getStationByCode(messwert.station).kurzname}
-            </div>
-            <div class="text-2xl tracking-wider">
-              ${messwert.komponente}: ${mittelwert.toFixed(2).toString()} µg/m²
+            <div class="transform -translate-y-12">
+              <div>
+                ${messwert.station}
+              </div>
+              <div>
+                ${getStationByCode(messwert.station).kurzname}
+              </div>
+              <div class="text-2xl tracking-wider">
+                ${messwert.komponente}: ${mittelwert
+            .toFixed(2)
+            .toString()} µg/m²
+              </div>
             </div>
           `;
 
