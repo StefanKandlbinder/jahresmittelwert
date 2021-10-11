@@ -1,5 +1,4 @@
 {
-  "modules": true,
   "plugins": {
     "postcss-import": true,
     "tailwindcss": true,
