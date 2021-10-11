@@ -3,4 +3,4 @@
     "postcss-import": true,
     "tailwindcss": true
   }
-};
+}
