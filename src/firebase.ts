@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
-import { Messwert } from "./messwert";
+import { Messwert } from "./messwert/messwert";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
