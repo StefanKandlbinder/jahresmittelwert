@@ -26,7 +26,7 @@ const getDates = () => {
   let dates = [];
   const date = new Date();
   // const daysOfYear = getDayOfYear(date) - 1;
-  const daysOfYear = 1;
+  const daysOfYear = 2;
 
   for (let i = 0; i < daysOfYear; i++) {
     let dateTo = new Intl.DateTimeFormat("en-GB").format(
@@ -118,8 +118,8 @@ const doIt = () => {
           count++;
 
           meanView.innerHTML = `
-            <div class="text-center bg-indigo-800 relative rounded-lg overflow-hidden">
-              <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative">
+            <div class="text-center shadow-lg">
+              <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative rounded-lg">
                 <div class="absolute top-0 left-1/2 transfrom -translate-x-1/2 text-xs bg-indigo-600 text-white px-6 rounded-b-sm">
                   ${messwert.station}
                 </div>  
