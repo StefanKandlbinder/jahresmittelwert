@@ -134,6 +134,12 @@ const doIt = () => {
                 </div>
               </div>
             </div>
+            <div class="mt-6 font-light flex justify-between">
+              <button class="bg-white text-indigo-800 rounded-lg w-8 h-8">T</button>
+              <button class="bg-white text-indigo-800 rounded-lg w-8 h-8 ml-3">W</button>
+              <button class="bg-white text-indigo-800 rounded-lg w-8 h-8 ml-3">M</button>
+              <button class="bg-white text-indigo-800 rounded-lg w-8 h-8 ml-3">Y</button>
+            </div>
           `;
 
           // writeStationsData(messwert.station, messwert.komponente, messwerte);
