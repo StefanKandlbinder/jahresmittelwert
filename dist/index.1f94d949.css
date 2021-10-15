@@ -471,6 +471,9 @@ video {
 	border-width: 2px;
 }.border-b {
 	border-bottom-width: 1px;
+}.border-indigo-900 {
+	--tw-border-opacity: 1;
+	border-color: rgba(49, 46, 129, var(--tw-border-opacity));
 }.border-opacity-30 {
 	--tw-border-opacity: 0.3;
 }.bg-indigo-600 {
