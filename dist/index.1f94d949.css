@@ -429,6 +429,9 @@ video {
 }.-translate-x-1\/2 {
 	--tw-translate-x: -50%;
 	transform: var(--tw-transform);
+}.-translate-y-1\/2 {
+	--tw-translate-y: -50%;
+	transform: var(--tw-transform);
 }.transform {
 	transform: var(--tw-transform);
 }.grid-cols-1 {

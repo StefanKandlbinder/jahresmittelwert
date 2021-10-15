@@ -131,7 +131,7 @@ const doIt = () => {
               <div class="text-2xl tracking-wider px-6 py-4 font-bold">
                 <div>${messwert.komponente}</div>
                 <div>
-                  ${mittelwert.toFixed(2).toString()} <span class="text-xs font-light">µg/m²</span>
+                  ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m²</div>
                 </div>
               </div>
             </div>
