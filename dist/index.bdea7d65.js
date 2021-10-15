@@ -544,8 +544,8 @@ const doIt = ()=>{
                 //}
                 count++;
                 meanView.innerHTML = `
-            <div class="text-center shadow-lg">
-              <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative rounded-lg">
+            <div class="text-center shadow-lg rounded-b-lg">
+              <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative rounded-t-lg">
                 <div class="absolute top-0 left-1/2 transfrom -translate-x-1/2 text-xs bg-indigo-600 text-white px-6 rounded-b-sm">
                   ${messwert.station}
                 </div>  
