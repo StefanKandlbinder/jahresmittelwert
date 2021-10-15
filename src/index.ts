@@ -1,6 +1,6 @@
 // https://www2.land-oberoesterreich.gv.at/imm/jaxrs/messwerte/json?datvon=2021-10-06 00:00&datbis=2021-10-07 00:00&stationcode=S108&komponentencode=BOE
 
-import { getDayOfYear, getDaysInMonth } from "date-fns";
+import { getDayOfYear, getDaysInMonth, getDay } from "date-fns";
 import { from, fromEvent } from "rxjs";
 import { concatMap, map, reduce } from "rxjs/operators";
 import { writeStationsData, init } from "./firebase";
@@ -18,6 +18,7 @@ init();
 
 const meanView = document.getElementById("mean");
 const daily = "TMW";
+let days = 7;
 let component = "NO2";
 let station = "S431"; // Römerberg
 let urls: string[] = [];
@@ -26,9 +27,9 @@ const getDates = () => {
   let dates = [];
   const date = new Date();
   // const daysOfYear = getDayOfYear(date) - 1;
-  const daysOfYear = 2;
+  // const daysOfYear = 2;
 
-  for (let i = 0; i < daysOfYear; i++) {
+  for (let i = 0; i < days; i++) {
     let dateTo = new Intl.DateTimeFormat("en-GB").format(
       new Date().setDate(date.getDate() - i)
     );

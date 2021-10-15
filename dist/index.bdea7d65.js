@@ -472,6 +472,7 @@ _firebase.init();
 // console.log(getStationsAir());
 const meanView = document.getElementById("mean");
 const daily = "TMW";
+let days = 7;
 let component = "NO2";
 let station = "S431"; // Römerberg
 let urls = [];
@@ -479,8 +480,8 @@ const getDates = ()=>{
     let dates = [];
     const date = new Date();
     // const daysOfYear = getDayOfYear(date) - 1;
-    const daysOfYear = 2;
-    for(let i = 0; i < daysOfYear; i++){
+    // const daysOfYear = 2;
+    for(let i = 0; i < days; i++){
         let dateTo = new Intl.DateTimeFormat("en-GB").format(new Date().setDate(date.getDate() - i));
         let dateFrom = new Intl.DateTimeFormat("en-GB").format(new Date().setDate(date.getDate() - (i + 1)));
         let tmpDateto = dateTo.split("/");
