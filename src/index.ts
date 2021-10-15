@@ -118,22 +118,25 @@ const doIt = () => {
           count++;
 
           meanView.innerHTML = `
-            <div class="transform -translate-y-12 text-center">
-              <div>
-                ${messwert.station}
+            <div class="text-center bg-indigo-800 relative rounded-lg overflow-hidden">
+              <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative">
+                <div class="absolute top-0 left-1/2 transfrom -translate-x-1/2 text-xs bg-indigo-600 text-white px-6 rounded-b-sm">
+                  ${messwert.station}
+                </div>  
+                <div>
+                  ${getStationByCode(messwert.station).kurzname}
+                </div>
               </div>
-              <div>
-                ${getStationByCode(messwert.station).kurzname}
-              </div>
-              <div class="text-2xl tracking-wider">
-                ${messwert.komponente}: ${mittelwert
-            .toFixed(2)
-            .toString()} µg/m²
+              <div class="text-2xl tracking-wider px-6 py-4 font-light">
+                <div>${messwert.komponente}</div>
+                <div>
+                  ${mittelwert.toFixed(2).toString()} <span class="text-xs">µg/m²</span>
+                </div>
               </div>
             </div>
           `;
 
-          writeStationsData(messwert.station, messwert.komponente, messwerte);
+          // writeStationsData(messwert.station, messwert.komponente, messwerte);
 
           return false;
         });
