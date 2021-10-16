@@ -1,8 +1,8 @@
 // https://www2.land-oberoesterreich.gv.at/imm/jaxrs/messwerte/json?datvon=2021-10-06 00:00&datbis=2021-10-07 00:00&stationcode=S108&komponentencode=BOE
 
-import { getDayOfYear, getDaysInMonth, getDay } from "date-fns";
+import { getDayOfYear, getDate, getDay } from "date-fns";
 import { from, fromEvent } from "rxjs";
-import { concatMap, map, reduce } from "rxjs/operators";
+import { concatMap, map, reduce, take, takeLast } from "rxjs/operators";
 import { writeStationsData, init } from "./firebase";
 
 import { Messwert } from "./messwert/messwert";
@@ -17,8 +17,9 @@ init();
 // console.log(getStationByCode("S415"));
 // console.log(getStationsAir());
 
-const meanView = document.getElementById("mean");
+const header = document.getElementById("header");
 const daily = "TMW";
+const date = new Date(Date.now());
 let days = 1;
 let component = "NO2";
 let station = "S431"; // Römerberg
@@ -35,6 +36,37 @@ const hideLoader = () => {
   loading.classList.add("hidden");
 };
 
+const setDaily = (event) => {
+  days = 1;
+  header.innerHTML = "Tagesdurchschnitt";
+  urls = createUrls(days, station, component);
+  handleFilterButtons(event);
+  doIt();
+}
+
+const setWeekly = (event) => {
+  days = getDay(date);
+  header.innerHTML = "Wochendurchschnitt";
+  urls = createUrls(days, station, component);
+  handleFilterButtons(event);
+  doIt();
+}
+
+const setMonthly = (event) => {
+  days = getDate(date);
+  header.innerHTML = "Monatsdurchschnitt";
+  urls = createUrls(days, station, component);
+  handleFilterButtons(event);
+}
+
+const setYearly = (event) => {
+  days = getDayOfYear(date);
+  header.innerHTML = "Jahresdurchschnitt";
+  urls = createUrls(days, station, component);
+  handleFilterButtons(event);
+}
+
+const meanView = document.getElementById("mean");
 const doIt = () => {
   let count = 1;
   let sum = 0;
@@ -62,11 +94,10 @@ const doIt = () => {
           mittelwert = sum / count;
 
           //if (count > 0) {
-          console.log(`
+          /* console.log(`
             Tage: ${count}
-            Station: ${messwert.station} / ${
-            getStationByCode(messwert.station).kurzname
-          }
+            Station: ${messwert.station} / ${getStationByCode(messwert.station).kurzname
+            }
             Komponente: ${messwert.komponente}
             Datum: ${new Intl.DateTimeFormat("de-AT").format(
               new Date(messwert.zeitpunkt)
@@ -74,7 +105,7 @@ const doIt = () => {
             Messwert: ${tmp}
             Summe: ${sum}
             Mittelwert: ${mittelwert.toFixed(2)}
-          `);
+          `);*/
           //}
 
           count++;
@@ -94,18 +125,12 @@ const doIt = () => {
                 <div>
                   ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
-                <div class="absolute left-0 bottom-0 text-gray-300 text-xs pb-2 w-full rounded-b-lg">
+                <div class="absolute left-0 bottom-0 text-white font-light text-xs pb-2 w-full rounded-b-lg">
                     ${new Intl.DateTimeFormat("de-AT").format(
-                      new Date(messwert.zeitpunkt)
-                    )}
+            new Date(messwert.zeitpunkt)
+          )}
                   </div>
               </div>
-            </div>
-            <div class="mt-6 font-bold flex justify-between">
-              <button id="dailyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10">T</button>
-              <button id="weeklyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">W</button>
-              <button id="monthlyButton" class="bg-indigo-800 text-white rounded-lg w-10 h-10 ml-3">M</button>
-              <button id="yearlyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">J</button>
             </div>
           `;
 
@@ -125,7 +150,6 @@ const doIt = () => {
 };
 
 const stationSelect = document.getElementById("stationSelect");
-const componentSelect = document.getElementById("componentSelect");
 
 const createStations = () => {
   const stations: Station[] = getStationsAir();
@@ -138,6 +162,8 @@ const createStations = () => {
 
   return stationsHtml;
 };
+
+const componentSelect = document.getElementById("componentSelect");
 
 const createComponents = () => {
   const components = ["NO2", "PM10kont", "PM25kont"];
@@ -152,7 +178,6 @@ const createComponents = () => {
 };
 
 stationSelect.innerHTML += createStations();
-componentSelect.innerHTML += createComponents();
 
 const stations$ = fromEvent(stationSelect, "change");
 stations$
@@ -165,6 +190,14 @@ stations$
   )
   .subscribe();
 
+Array.from(stationSelect.options).forEach((item) => {
+  if (item.value === station) {
+    item.selected = true;
+  }
+});
+
+componentSelect.innerHTML += createComponents();
+
 const components$ = fromEvent(componentSelect, "change");
 components$
   .pipe(
@@ -176,16 +209,59 @@ components$
   )
   .subscribe();
 
-Array.from(stationSelect.options).forEach((item) => {
-  if (item.value === station) {
-    item.selected = true;
-  }
-});
-
 Array.from(componentSelect.options).forEach((item) => {
   if (item.value === component) {
     item.selected = true;
   }
 });
 
-doIt();
+const dailyButton = document.getElementById("dailyButton");
+const dailyButton$ = fromEvent(dailyButton, "click");
+dailyButton$
+  .subscribe({
+    next: (event) => {
+      setDaily(event);
+    }
+  })
+
+const weeklyButton = document.getElementById("weeklyButton");
+const weeklyButton$ = fromEvent(weeklyButton, "click");
+weeklyButton$
+  .subscribe({
+    next: (event) => {
+      setWeekly(event);
+    }
+  })
+
+const monthlyButton = document.getElementById("monthlyButton");
+const monthlyButton$ = fromEvent(monthlyButton, "click");
+monthlyButton$
+  .subscribe({
+    next: (event) => {
+      setMonthly(event)
+    }
+  })
+
+const yearlyButton = document.getElementById("yearlyButton");
+const yearlyButton$ = fromEvent(yearlyButton, "click");
+yearlyButton$
+  .subscribe({
+    next: (event) => {
+      setYearly(event);
+    }
+  })
+
+function handleFilterButtons(event) {
+  let matches = document.querySelectorAll("[data-filter-button]");
+  matches.forEach(button => {
+    if (button.id === event.target.id) {
+      event.target.classList.remove("text-indigo-800", "bg-white");
+      event.target.classList.add("bg-indigo-800", "text-white")
+    }
+    else {
+      button.classList.remove("bg-indigo-800", "text-white");
+      button.classList.add("text-indigo-800", "bg-white");
+    }
+  })
+}
+// doIt();

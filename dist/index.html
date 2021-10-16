@@ -26,9 +26,17 @@
       </div>
     </div>
 
-    <div class="flex flex-col items-center flex-grow text-white text-xl font-bold tracking-wide mt-10" id="mean"></div>
+    <div class="flex flex-col items-center flex-grow text-white text-xl font-bold tracking-wide mt-10">
+    <div id="mean"></div>
+    <div class="mt-6 font-bold flex justify-between">
+      <button id="dailyButton" data-filter-button="" class="bg-white text-indigo-800 rounded-lg w-10 h-10">T</button>
+      <button id="weeklyButton" data-filter-button="" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">W</button>
+      <button id="monthlyButton" data-filter-button="" class="bg-indigo-800 text-white rounded-lg w-10 h-10 ml-3">M</button>
+      <button id="yearlyButton" data-filter-button="" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">J</button>
+    </div>
+    </div>
     
-    <div id="loading" class="fixed h-full w-full top-0 left-0 flex items-center justify-center text-white">
+    <div id="loading" class="hidden fixed h-full w-full top-0 left-0 flex items-center justify-center text-white">
       <div id="backdrop" class="fixed bg-gray-900 bg-opacity-30 w-full h-full top-0 left-0"></div>
       <svg xmlns="http://www.w3.org/2000/svg" width="20vw" height="20vw" viewbox="0 0 45 45" stroke="#fff">
         <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
