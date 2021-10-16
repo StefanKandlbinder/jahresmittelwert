@@ -264,4 +264,5 @@ function handleFilterButtons(event) {
     }
   })
 }
-// doIt();
+
+doIt();
