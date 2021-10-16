@@ -532,7 +532,7 @@ const doIt = ()=>{
                 <div>
                   ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
-                <div class="absolute left-0 bottom-0 bg-white text-gray-400 font-mono text-xs p-1 w-full rounded-b-lg">
+                <div class="absolute left-0 bottom-0 text-gray-300 text-xs pb-2 w-full rounded-b-lg">
                     ${new Intl.DateTimeFormat("de-AT").format(new Date(messwert.zeitpunkt))}
                   </div>
               </div>
