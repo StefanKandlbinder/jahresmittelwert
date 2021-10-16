@@ -8,6 +8,7 @@ import { writeStationsData, init } from "./firebase";
 import { Messwert } from "./messwert/messwert";
 import { Station } from "./stationen/station";
 import { getStationByCode, getStationsAir } from "./stationen/utilities";
+import { createUrls } from "./utilities/utilities";
 
 // A simple request Observable we can reuse to clean up our examples
 const request = (url: string) => from(fetch(url).then((res) => res.json()));
@@ -18,52 +19,12 @@ init();
 
 const meanView = document.getElementById("mean");
 const daily = "TMW";
-let days = 7;
+let days = 1;
 let component = "NO2";
 let station = "S431"; // Römerberg
 let urls: string[] = [];
 
-const getDates = () => {
-  let dates = [];
-  const date = new Date();
-  // const daysOfYear = getDayOfYear(date) - 1;
-  // const daysOfYear = 2;
-
-  for (let i = 0; i < days; i++) {
-    let dateTo = new Intl.DateTimeFormat("en-GB").format(
-      new Date().setDate(date.getDate() - i)
-    );
-    let dateFrom = new Intl.DateTimeFormat("en-GB").format(
-      new Date().setDate(date.getDate() - (i + 1))
-    );
-
-    let tmpDateto = dateTo.split("/");
-    dateTo = tmpDateto[2] + "-" + tmpDateto[1] + "-" + tmpDateto[0] + " 00:00";
-    let tmpDateFrom = dateFrom.split("/");
-    dateFrom =
-      tmpDateFrom[2] + "-" + tmpDateFrom[1] + "-" + tmpDateFrom[0] + " 00:00";
-
-    dates.push({ dateFrom, dateTo });
-  }
-
-  return dates;
-};
-
-// console.log(getDates());
-
-const createUrls = () => {
-  urls = [];
-  getDates().map((date) => {
-    urls.push(
-      `https://www2.land-oberoesterreich.gv.at/imm/jaxrs/messwerte/json?datvon=${date.dateFrom}&datbis=${date.dateTo}&stationcode=${station}&komponentencode=${component}`
-    );
-    return true;
-  });
-
-  return urls;
-};
-
-createUrls();
+urls = createUrls(days, station, component);
 
 const loading = document.getElementById("loading");
 const showLoader = () => {
@@ -119,7 +80,7 @@ const doIt = () => {
           count++;
 
           meanView.innerHTML = `
-            <div class="text-center shadow-lg rounded-b-lg">
+            <div class="text-center shadow-xl rounded-b-lg">
               <div class="bg-white text-indigo-800 px-6 pb-4 pt-6 relative rounded-t-lg">
                 <div class="absolute top-0 left-1/2 transfrom -translate-x-1/2 text-xs bg-indigo-600 text-white px-6 rounded-b-sm">
                   ${messwert.station}
@@ -128,18 +89,23 @@ const doIt = () => {
                   ${getStationByCode(messwert.station).kurzname}
                 </div>
               </div>
-              <div class="text-2xl tracking-wider px-6 py-4 font-bold">
+              <div class="text-2xl tracking-wider px-6 pt-4 pb-10 font-bold relative">
                 <div>${messwert.komponente}</div>
                 <div>
                   ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
+                <div class="absolute left-0 bottom-0 bg-white text-gray-400 font-mono text-xs p-1 w-full rounded-b-lg">
+                    ${new Intl.DateTimeFormat("de-AT").format(
+                      new Date(messwert.zeitpunkt)
+                    )}
+                  </div>
               </div>
             </div>
             <div class="mt-6 font-bold flex justify-between">
-              <button class="bg-white text-indigo-800 rounded-lg w-10 h-10">T</button>
-              <button class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">W</button>
-              <button class="bg-indigo-800 text-white rounded-lg w-10 h-10 ml-3">M</button>
-              <button class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">J</button>
+              <button id="dailyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10">T</button>
+              <button id="weeklyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">W</button>
+              <button id="monthlyButton" class="bg-indigo-800 text-white rounded-lg w-10 h-10 ml-3">M</button>
+              <button id="yearlyButton" class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">J</button>
             </div>
           `;
 
@@ -193,7 +159,7 @@ stations$
   .pipe(
     map((event: InputEvent) => {
       station = event.target.value;
-      createUrls();
+      urls = createUrls(days, station, component);
       doIt();
     })
   )
@@ -204,7 +170,7 @@ components$
   .pipe(
     map((event: InputEvent) => {
       component = event.target.value;
-      createUrls();
+      urls = createUrls(days, station, component);
       doIt();
     })
   )
