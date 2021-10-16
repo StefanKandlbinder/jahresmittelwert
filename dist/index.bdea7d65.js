@@ -557,7 +557,7 @@ const doIt = ()=>{
               <div class="text-2xl tracking-wider px-6 py-4 font-bold">
                 <div>${messwert.komponente}</div>
                 <div>
-                  ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m²</div>
+                  ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
               </div>
             </div>
@@ -565,7 +565,7 @@ const doIt = ()=>{
               <button class="bg-white text-indigo-800 rounded-lg w-10 h-10">T</button>
               <button class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">W</button>
               <button class="bg-indigo-800 text-white rounded-lg w-10 h-10 ml-3">M</button>
-              <button class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">Y</button>
+              <button class="bg-white text-indigo-800 rounded-lg w-10 h-10 ml-3">J</button>
             </div>
           `;
                 // writeStationsData(messwert.station, messwert.komponente, messwerte);
