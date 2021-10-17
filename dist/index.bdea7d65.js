@@ -497,6 +497,7 @@ const setDaily = (event)=>{
 };
 const setWeekly = (event)=>{
     days = _dateFns.getDay(date);
+    days === 0 && (days = 7);
     header.innerHTML = "Wochendurchschnitt";
     urls = _utilities1.createUrls(days, station, component);
     handleFilterButtons(event);
@@ -666,8 +667,7 @@ function handleFilterButtons(event) {
             button.classList.add("text-indigo-800", "bg-white");
         }
     });
-}
-doIt();
+} // doIt();
 
 },{"rxjs":"eIdcY","rxjs/operators":"hcCBS","./firebase":"9dU0A","./stationen/utilities":"2aDF4","./utilities/utilities":"6YOOB","date-fns":"9iKZB"}],"eIdcY":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

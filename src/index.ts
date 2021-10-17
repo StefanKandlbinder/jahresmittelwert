@@ -46,6 +46,7 @@ const setDaily = (event) => {
 
 const setWeekly = (event) => {
   days = getDay(date);
+  days === 0 ? days = 7 : days;
   header.innerHTML = "Wochendurchschnitt";
   urls = createUrls(days, station, component);
   handleFilterButtons(event);
@@ -265,4 +266,4 @@ function handleFilterButtons(event) {
   })
 }
 
-doIt();
+// doIt();
