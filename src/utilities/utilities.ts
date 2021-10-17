@@ -1,4 +1,4 @@
-function getDates(days: number) {
+export function getDates(days: number) {
     let dates = [];
     const date = new Date();
 

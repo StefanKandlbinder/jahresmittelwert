@@ -3,7 +3,7 @@
 import { getDayOfYear, getDate, getDay } from "date-fns";
 import { from, fromEvent } from "rxjs";
 import { concatMap, map, reduce, take, takeLast } from "rxjs/operators";
-import { writeStationsData, init } from "./firebase";
+import { writeStationsData, writeMeanData, init } from "./firebase";
 
 import { Messwert } from "./messwert/messwert";
 import { Station } from "./stationen/station";
@@ -72,6 +72,7 @@ const doIt = () => {
   let count = 1;
   let sum = 0;
   let mittelwert = 0;
+  let tmpMesswerte = [];
 
   showLoader();
 
@@ -135,6 +136,8 @@ const doIt = () => {
             </div>
           `;
 
+          tmpMesswerte.push(messwerte);
+
           // writeStationsData(messwert.station, messwert.komponente, messwerte);
 
           return false;
@@ -145,6 +148,8 @@ const doIt = () => {
       },
       complete: () => {
         hideLoader();
+        writeStationsData(station, component, tmpMesswerte[0]);
+        writeMeanData(station, component, mittelwert);
         console.log("COMPLETED");
       }
     });

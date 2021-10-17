@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, update } from "firebase/database";
 import { Messwert } from "./messwert/messwert";
 
 // Your web app's Firebase configuration
@@ -18,8 +18,9 @@ const firebaseConfig = {
 export function init() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  console.log(app.options.projectId);
+  // console.log(app.options.projectId);
 }
+
 export function writeStationsData(
   station: string,
   component: string,
@@ -27,13 +28,32 @@ export function writeStationsData(
 ) {
   const db = getDatabase();
 
-  set(ref(db, station), {
-    component: {
-      ...values
-    }
+  set(ref(db, station + '/' + [component]), {
+
+    ...values,
+    "mean": 0
+
   })
     .then(() => {
       console.info("Data successfully saved!");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+export function writeMeanData(
+  station: string,
+  component: string,
+  mean: number
+) {
+  const db = getDatabase();
+  const updates = {};
+  updates['/' + station + '/' + component + '/mean'] = mean;
+
+  update(ref(db), updates)
+    .then(() => {
+      console.info("Mean successfully saved!");
     })
     .catch((error) => {
       console.error(error);

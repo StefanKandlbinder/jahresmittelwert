@@ -520,6 +520,7 @@ const doIt = ()=>{
     let count = 1;
     let sum = 0;
     let mittelwert = 0;
+    let tmpMesswerte = [];
     showLoader();
     _rxjs.from(urls).pipe(_operators.concatMap((url)=>{
         return request(url);
@@ -571,6 +572,7 @@ const doIt = ()=>{
               </div>
             </div>
           `;
+                tmpMesswerte.push(messwerte);
                 // writeStationsData(messwert.station, messwert.komponente, messwerte);
                 return false;
             });
@@ -580,6 +582,8 @@ const doIt = ()=>{
         },
         complete: ()=>{
             hideLoader();
+            _firebase.writeStationsData(station, component, tmpMesswerte[0]);
+            _firebase.writeMeanData(station, component, mittelwert);
             console.log("COMPLETED");
         }
     });
@@ -8273,6 +8277,8 @@ parcelHelpers.export(exports, "init", ()=>init
 );
 parcelHelpers.export(exports, "writeStationsData", ()=>writeStationsData
 );
+parcelHelpers.export(exports, "writeMeanData", ()=>writeMeanData
+);
 // Import the functions you need from the SDKs you need
 var _app = require("firebase/app");
 var _database = require("firebase/database");
@@ -8289,16 +8295,28 @@ const firebaseConfig = {
 function init() {
     // Initialize Firebase
     const app = _app.initializeApp(firebaseConfig);
-    console.log(app.options.projectId);
+// console.log(app.options.projectId);
 }
 function writeStationsData(station, component, values) {
     const db = _database.getDatabase();
-    _database.set(_database.ref(db, station), {
-        component: {
-            ...values
-        }
+    _database.set(_database.ref(db, station + '/' + [
+        component
+    ]), {
+        ...values,
+        "mean": 0
     }).then(()=>{
         console.info("Data successfully saved!");
+    }).catch((error)=>{
+        console.error(error);
+    });
+}
+function writeMeanData(station, component, mean) {
+    const db = _database.getDatabase();
+    const updates = {
+    };
+    updates['/' + station + '/' + component + '/mean'] = mean;
+    _database.update(_database.ref(db), updates).then(()=>{
+        console.info("Mean successfully saved!");
     }).catch((error)=>{
         console.error(error);
     });
@@ -23114,6 +23132,8 @@ module.exports = JSON.parse("{\"stationen\":[{\"code\":\"S415\",\"kurzname\":\"L
 },{}],"6YOOB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getDates", ()=>getDates
+);
 parcelHelpers.export(exports, "createUrls", ()=>createUrls
 );
 function getDates(days) {
