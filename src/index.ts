@@ -58,6 +58,7 @@ const setMonthly = (event) => {
   header.innerHTML = "Monatsdurchschnitt";
   urls = createUrls(days, station, component);
   handleFilterButtons(event);
+  doIt();
 }
 
 const setYearly = (event) => {

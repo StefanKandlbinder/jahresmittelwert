@@ -388,6 +388,8 @@ video {
 	--tw-sepia: var(--tw-empty,/*!*/ /*!*/);
 	--tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
 	--tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}.pointer-events-none {
+	pointer-events: none;
 }.fixed {
 	position: fixed;
 }.absolute {
@@ -433,6 +435,8 @@ video {
 	transform: var(--tw-transform);
 }.transform {
 	transform: var(--tw-transform);
+}.cursor-not-allowed {
+	cursor: not-allowed;
 }.grid-cols-1 {
 	grid-template-columns: repeat(1, minmax(0, 1fr));
 }.flex-col {
@@ -538,11 +542,21 @@ video {
 }.text-gray-300 {
 	--tw-text-opacity: 1;
 	color: rgba(209, 213, 219, var(--tw-text-opacity));
+}.opacity-30 {
+	opacity: 0.3;
+}.opacity-50 {
+	opacity: 0.5;
+}.opacity-70 {
+	opacity: 0.7;
+}.opacity-60 {
+	opacity: 0.6;
 }.shadow-xl {
 	--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }.filter {
 	filter: var(--tw-filter);
+}.hover\:cursor-not-allowed:hover {
+	cursor: not-allowed;
 }@media (min-width: 768px) {
 
 	.md\:grid-cols-2 {
