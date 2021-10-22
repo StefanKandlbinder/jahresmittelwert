@@ -2,7 +2,7 @@
 
 import { getDayOfYear, getDate, getDay } from "date-fns";
 import { from, fromEvent } from "rxjs";
-import { concatMap, map, reduce, take, takeLast } from "rxjs/operators";
+import { concatMap, map, reduce } from "rxjs/operators";
 import { writeStationsData, writeMeanData, init } from "./firebase";
 
 import { Messwert } from "./messwert/messwert";
@@ -11,7 +11,13 @@ import { getStationByCode, getStationsAir } from "./stationen/utilities";
 import { createUrls } from "./utilities/utilities";
 
 // A simple request Observable we can reuse to clean up our examples
-const request = (url: string) => from(fetch(url).then((res) => res.json()));
+const request = (url: string) => from(fetch(url)
+  .then((res) => res.json())
+  .catch(error => {
+    hideLoader();
+    return Promise.reject()
+  })
+);
 
 init();
 // console.log(getStationByCode("S415"));
@@ -24,8 +30,9 @@ let days = 1;
 let component = "NO2";
 let station = "S431"; // Römerberg
 let urls: string[] = [];
+const proxy = false
 
-urls = createUrls(days, station, component);
+urls = createUrls(days, station, component, proxy);
 
 const loading = document.getElementById("loading");
 const showLoader = () => {
@@ -39,7 +46,7 @@ const hideLoader = () => {
 const setDaily = (event) => {
   days = 1;
   header.innerHTML = "Tagesdurchschnitt";
-  urls = createUrls(days, station, component);
+  urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
   doIt();
 }
@@ -48,7 +55,7 @@ const setWeekly = (event) => {
   days = getDay(date);
   days === 0 ? days = 7 : days;
   header.innerHTML = "Wochendurchschnitt";
-  urls = createUrls(days, station, component);
+  urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
   doIt();
 }
@@ -56,7 +63,7 @@ const setWeekly = (event) => {
 const setMonthly = (event) => {
   days = getDate(date);
   header.innerHTML = "Monatsdurchschnitt";
-  urls = createUrls(days, station, component);
+  urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
   doIt();
 }
@@ -64,7 +71,7 @@ const setMonthly = (event) => {
 const setYearly = (event) => {
   days = getDayOfYear(date);
   header.innerHTML = "Jahresdurchschnitt";
-  urls = createUrls(days, station, component);
+  urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
 }
 
@@ -129,9 +136,8 @@ const doIt = () => {
                   ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
                 <div class="absolute left-0 bottom-0 text-white font-light text-xs pb-2 w-full rounded-b-lg">
-                    ${new Intl.DateTimeFormat("de-AT").format(
-            new Date(messwert.zeitpunkt)
-          )}
+                    ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[messwerte.length - 1].zeitpunkt))} - 
+                    ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[0].zeitpunkt))}
                   </div>
               </div>
             </div>
@@ -145,7 +151,8 @@ const doIt = () => {
         });
       },
       error: (error) => {
-        console.log(error);
+        hideLoader();
+        throw error;
       },
       complete: () => {
         hideLoader();
@@ -191,7 +198,7 @@ stations$
   .pipe(
     map((event: InputEvent) => {
       station = event.target.value;
-      urls = createUrls(days, station, component);
+      urls = createUrls(days, station, component, proxy);
       doIt();
     })
   )
@@ -210,7 +217,7 @@ components$
   .pipe(
     map((event: InputEvent) => {
       component = event.target.value;
-      urls = createUrls(days, station, component);
+      urls = createUrls(days, station, component, proxy);
       doIt();
     })
   )

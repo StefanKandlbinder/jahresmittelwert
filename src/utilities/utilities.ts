@@ -22,11 +22,15 @@ export function getDates(days: number) {
     return dates;
 };
 
-export function createUrls(days: number, station:string, component:string) {
+export function createUrls(days: number, station:string, component:string, proxy: boolean) {
+    const proxyUrl = "https://53d58500-4f48-4fde-b935-b53483b6fe66.mock.pstmn.io/"
+    const proxyDatVon ="2021-10-20%2000:00";
+    const proxyDatBis ="2021-10-21%2000:00";
+
     let urls = [];
     getDates(days).map((date) => {
         urls.push(
-            `https://www2.land-oberoesterreich.gv.at/imm/jaxrs/messwerte/json?datvon=${date.dateFrom}&datbis=${date.dateTo}&stationcode=${station}&komponentencode=${component}`
+            `${proxy ? proxyUrl : "https://www2.land-oberoesterreich.gv.at/"}imm/jaxrs/messwerte/json?datvon=${proxy ? proxyDatVon: date.dateFrom}&datbis=${proxy ? proxyDatBis : date.dateTo}&stationcode=${station}&komponentencode=${component}`
         );
         return true;
     });
