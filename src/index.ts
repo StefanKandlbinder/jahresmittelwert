@@ -11,7 +11,11 @@ import { getStationByCode, getStationsAir } from "./stationen/utilities";
 import { createUrls } from "./utilities/utilities";
 
 // A simple request Observable we can reuse to clean up our examples
-const request = (url: string) => from(fetch(url)
+const request = (url: string) => from(fetch(url, {
+  headers: {
+    'Cache-Control': 'max-age=3600'
+  },
+  })
   .then((res) => res.json())
   .catch(error => {
     hideLoader();
