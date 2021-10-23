@@ -24,6 +24,7 @@ const request = (url: string) => from(fetch(url, {
   .then((res) => res.json())
   .catch(error => {
     hideLoader();
+    console.log(error);
     return Promise.reject()
   })
 );
@@ -238,7 +239,7 @@ componentSelect.innerHTML += createComponents();
 const components$ = fromEvent(componentSelect, "change");
 components$
   .pipe(
-    map((event) => {
+    map((event: any) => {
       component = event.target.value;
       urls = createUrls(days, station, component, proxy);
       doIt();
@@ -288,7 +289,7 @@ yearlyButton$
     }
   })
 
-function handleFilterButtons(event: Event) {
+function handleFilterButtons(event: any) {
   let matches = document.querySelectorAll("[data-filter-button]");
   matches.forEach(button => {
     if (button.id === event.target.id) {
