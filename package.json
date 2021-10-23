@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "prebuild": "rm -rf dist",
+    "start": "npx parcel index.html --open",
+    "build": "npx parcel build index.html"
   },
   "dependencies": {
     "date-fns": "2.25.0",
@@ -12,13 +13,19 @@
     "rxjs": "7.4.0"
   },
   "devDependencies": {
-    "@parcel/config-default": "^2.0.0",
     "@parcel/compressor-brotli": "^2.0.0",
     "@parcel/compressor-gzip": "^2.0.0",
+    "@parcel/config-default": "^2.0.0",
     "autoprefixer": "^10.3.7",
     "parcel": "^2.0.0",
     "postcss-import": "^14.0.2",
-    "tailwindcss": "^2.2.17"
+    "tailwindcss": "^2.2.17",
+    "workbox-cacheable-response": "^6.3.0",
+    "workbox-expiration": "^6.3.0",
+    "workbox-precaching": "^6.3.0",
+    "workbox-routing": "^6.3.0",
+    "workbox-strategies": "^6.3.0",
+    "workbox-sw": "^6.3.0"
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": []

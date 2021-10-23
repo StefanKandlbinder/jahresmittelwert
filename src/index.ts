@@ -12,8 +12,13 @@ import { createUrls } from "./utilities/utilities";
 
 // A simple request Observable we can reuse to clean up our examples
 const request = (url: string) => from(fetch(url, {
+  method: 'GET',
+  mode: 'cors',
   headers: {
-    // 'Cache-Control': 'max-age=3600'
+    // 'Cache-Control': 'max-age=3600',
+    // 'Accept-Encoding': 'gzip, deflate, br',
+    // 'Accept': '*/*',
+    // 'Connection': 'keep-alive'
   },
   })
   .then((res) => res.json())
@@ -22,6 +27,20 @@ const request = (url: string) => from(fetch(url, {
     return Promise.reject()
   })
 );
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener('load', function() {
+    this.navigator.serviceWorker.register(
+        new URL('sw.js', import.meta.url), {type: 'module'}
+      )
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      },
+      error => {
+        console.log("Service Worker registration faild: " + error)
+      })
+  });
+}
 
 init();
 // console.log(getStationByCode("S415"));
