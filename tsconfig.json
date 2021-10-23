@@ -21,7 +21,12 @@
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "strict": true,
-    "target": "es2017",
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
-  }
+    "strictNullChecks": false,
+    "target": "es2017"
+  },
+  "exclude": [
+    "./node_modules/**/*",
+    "./dist/**/*",
+    "./tailwind.config.js"
+  ]
 }

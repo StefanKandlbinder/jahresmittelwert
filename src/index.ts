@@ -31,7 +31,7 @@ const request = (url: string) => from(fetch(url, {
 if ("serviceWorker" in navigator) {
   window.addEventListener('load', function() {
     this.navigator.serviceWorker.register(
-        new URL('sw.js', import.meta.url), {type: 'module'}
+        new URL('sw.ts', import.meta.url), {type: 'module'}
       )
       .then(registration => {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -59,14 +59,14 @@ urls = createUrls(days, station, component, proxy);
 
 const loading = document.getElementById("loading");
 const showLoader = () => {
-  loading.classList.remove("hidden");
+  loading?.classList.remove("hidden");
 };
 
 const hideLoader = () => {
-  loading.classList.add("hidden");
+  loading?.classList.add("hidden");
 };
 
-const setDaily = (event) => {
+const setDaily = (event:Event) => {
   days = 1;
   header.innerHTML = "Tagesdurchschnitt";
   urls = createUrls(days, station, component, proxy);
@@ -74,7 +74,7 @@ const setDaily = (event) => {
   doIt();
 }
 
-const setWeekly = (event) => {
+const setWeekly = (event:Event) => {
   days = getDay(date);
   days === 0 ? days = 7 : days;
   header.innerHTML = "Wochendurchschnitt";
@@ -83,7 +83,7 @@ const setWeekly = (event) => {
   doIt();
 }
 
-const setMonthly = (event) => {
+const setMonthly = (event:Event) => {
   days = getDate(date);
   header.innerHTML = "Monatsdurchschnitt";
   urls = createUrls(days, station, component, proxy);
@@ -91,7 +91,7 @@ const setMonthly = (event) => {
   doIt();
 }
 
-const setYearly = (event) => {
+const setYearly = (event: Event) => {
   days = getDayOfYear(date);
   header.innerHTML = "Jahresdurchschnitt";
   urls = createUrls(days, station, component, proxy);
@@ -103,7 +103,7 @@ const doIt = () => {
   let count = 1;
   let sum = 0;
   let mittelwert = 0;
-  let tmpMesswerte = [];
+  let tmpMesswerte:any = [];
 
   showLoader();
 
@@ -186,7 +186,7 @@ const doIt = () => {
     });
 };
 
-const stationSelect = document.getElementById("stationSelect");
+const stationSelect:HTMLSelectElement = document.getElementById("stationSelect") as HTMLSelectElement;
 
 const createStations = () => {
   const stations: Station[] = getStationsAir();
@@ -200,7 +200,7 @@ const createStations = () => {
   return stationsHtml;
 };
 
-const componentSelect = document.getElementById("componentSelect");
+const componentSelect:HTMLSelectElement = document.getElementById("componentSelect") as HTMLSelectElement;
 
 const createComponents = () => {
   const components = ["NO2", "PM10kont", "PM25kont"];
@@ -219,7 +219,7 @@ stationSelect.innerHTML += createStations();
 const stations$ = fromEvent(stationSelect, "change");
 stations$
   .pipe(
-    map((event: InputEvent) => {
+    map((event: any) => {
       station = event.target.value;
       urls = createUrls(days, station, component, proxy);
       doIt();
@@ -238,7 +238,7 @@ componentSelect.innerHTML += createComponents();
 const components$ = fromEvent(componentSelect, "change");
 components$
   .pipe(
-    map((event: InputEvent) => {
+    map((event) => {
       component = event.target.value;
       urls = createUrls(days, station, component, proxy);
       doIt();
@@ -252,7 +252,7 @@ Array.from(componentSelect.options).forEach((item) => {
   }
 });
 
-const dailyButton = document.getElementById("dailyButton");
+const dailyButton:HTMLButtonElement = document.getElementById("dailyButton") as HTMLButtonElement;
 const dailyButton$ = fromEvent(dailyButton, "click");
 dailyButton$
   .subscribe({
@@ -288,7 +288,7 @@ yearlyButton$
     }
   })
 
-function handleFilterButtons(event) {
+function handleFilterButtons(event: Event) {
   let matches = document.querySelectorAll("[data-filter-button]");
   matches.forEach(button => {
     if (button.id === event.target.id) {
