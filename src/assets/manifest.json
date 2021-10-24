@@ -1,6 +1,6 @@
 {
  "name": "Jahresmittelwert",
- "short_name": "Luft",
+ "short_name": "Jahresmittelwert",
  "description": "Durchschnittliche Luftbelastung des letzten Tages, der letzten Woche, des letzen Monats und des Jahres",
  "start_url": "/",
  "display": "standalone",
