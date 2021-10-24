@@ -43,7 +43,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-init();
+// init();
 // console.log(getStationByCode("S415"));
 // console.log(getStationsAir());
 
@@ -180,8 +180,8 @@ const doIt = () => {
       },
       complete: () => {
         hideLoader();
-        writeStationsData(station, component, tmpMesswerte[0]);
-        writeMeanData(station, component, mittelwert);
+        // writeStationsData(station, component, tmpMesswerte[0]);
+        // writeMeanData(station, component, mittelwert);
         console.log("COMPLETED");
       }
     });
