@@ -170,7 +170,7 @@ const doIt = () => {
               <div class="text-2xl tracking-wider px-6 pt-4 pb-10 font-bold relative">
                 <div>${messwert.komponente}</div>
                 <div>
-                  ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
+                  ${days === 0 && mean === "HMW" ? (parseFloat(messwerte[messwerte.length - 1].messwert.replace(",", ".")) * 1000).toFixed(2).toString() :  mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
                 <div class="absolute left-0 bottom-0 text-white font-light text-xs pb-2 w-full rounded-b-lg">
                     ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[messwerte.length - 1].zeitpunkt))}
