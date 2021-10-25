@@ -4,7 +4,6 @@ import {
   StaleWhileRevalidate,
   CacheFirst,
 } from 'workbox-strategies';
-import { precacheAndRoute } from 'workbox-precaching';
 
 // Used for filtering matches based on status code, header, or both
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
