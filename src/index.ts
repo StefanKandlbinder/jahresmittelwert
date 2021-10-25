@@ -316,7 +316,6 @@ function handleFilterButtons(event: any) {
   let matches = document.querySelectorAll("[data-filter-button]");
   matches.forEach(button => {
     if (button.id === event.target.id) {
-      console.info(button.id, event.target.id);
       event.target.classList.remove("text-indigo-800", "bg-white");
       event.target.classList.add("bg-indigo-800", "text-white")
     }
