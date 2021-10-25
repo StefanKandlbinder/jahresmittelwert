@@ -48,9 +48,9 @@ if ("serviceWorker" in navigator) {
 // console.log(getStationsAir());
 
 const header = document.getElementById("header");
-const daily = "TMW";
+let mean = "TMW";
 const date = new Date(Date.now());
-let days = 1;
+let days = 0;
 let component = "NO2";
 let station = "S431"; // Römerberg
 let urls: string[] = [];
@@ -67,8 +67,18 @@ const hideLoader = () => {
   loading?.classList.add("hidden");
 };
 
+const setNow = (event:Event) => {
+  days = 0;
+  mean = "HMW"
+  header.innerHTML = "Aktueller Wert";
+  urls = createUrls(days, station, component, proxy);
+  handleFilterButtons(event);
+  doIt();
+}
+
 const setDaily = (event:Event) => {
-  days = 1;
+  days = 0;
+  mean = "TMW";
   header.innerHTML = "Tagesdurchschnitt";
   urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
@@ -78,6 +88,7 @@ const setDaily = (event:Event) => {
 const setWeekly = (event:Event) => {
   days = getDay(date);
   days === 0 ? days = 7 : days;
+  mean = "TMW";
   header.innerHTML = "Wochendurchschnitt";
   urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
@@ -86,6 +97,7 @@ const setWeekly = (event:Event) => {
 
 const setMonthly = (event:Event) => {
   days = getDate(date);
+  mean = "TMW";
   header.innerHTML = "Monatsdurchschnitt";
   urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
@@ -94,6 +106,7 @@ const setMonthly = (event:Event) => {
 
 const setYearly = (event: Event) => {
   days = getDayOfYear(date);
+  mean = "TMW"
   header.innerHTML = "Jahresdurchschnitt";
   urls = createUrls(days, station, component, proxy);
   handleFilterButtons(event);
@@ -116,7 +129,7 @@ const doIt = () => {
       reduce((acc, res) => [...acc, ...res.messwerte], [] as Messwert[]),
       map((messwerte: Messwert[]) =>
         messwerte.filter((messwert) => {
-          return messwert.mittelwert === daily;
+          return messwert.mittelwert === mean;
         })
       )
     )
@@ -160,8 +173,9 @@ const doIt = () => {
                   ${mittelwert.toFixed(2).toString()} <div class="text-xs font-light">µg/m³</div>
                 </div>
                 <div class="absolute left-0 bottom-0 text-white font-light text-xs pb-2 w-full rounded-b-lg">
-                    ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[messwerte.length - 1].zeitpunkt))} - 
-                    ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[0].zeitpunkt))}
+                    ${new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[messwerte.length - 1].zeitpunkt))}
+                    ${ days !== 0 ? "-" : ""}
+                    ${ days === 0 ? "" : new Intl.DateTimeFormat("de-AT").format(new Date(messwerte[0].zeitpunkt))}
                   </div>
               </div>
             </div>
@@ -253,6 +267,15 @@ Array.from(componentSelect.options).forEach((item) => {
   }
 });
 
+const nowButton:HTMLButtonElement = document.getElementById("nowButton") as HTMLButtonElement;
+const nowButton$ = fromEvent(nowButton, "click");
+nowButton$
+  .subscribe({
+    next: (event) => {
+      setNow(event);
+    }
+  })
+
 const dailyButton:HTMLButtonElement = document.getElementById("dailyButton") as HTMLButtonElement;
 const dailyButton$ = fromEvent(dailyButton, "click");
 dailyButton$
@@ -293,6 +316,7 @@ function handleFilterButtons(event: any) {
   let matches = document.querySelectorAll("[data-filter-button]");
   matches.forEach(button => {
     if (button.id === event.target.id) {
+      console.info(button.id, event.target.id);
       event.target.classList.remove("text-indigo-800", "bg-white");
       event.target.classList.add("bg-indigo-800", "text-white")
     }

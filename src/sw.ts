@@ -2,7 +2,7 @@ import { registerRoute } from 'workbox-routing';
 import {
   NetworkFirst,
   StaleWhileRevalidate,
-  CacheFirst,
+  CacheFirst
 } from 'workbox-strategies';
 
 // Used for filtering matches based on status code, header, or both
@@ -118,7 +118,7 @@ registerRoute(
 
 registerRoute(
   new RegExp('https://www2.land-oberoesterreich.gv.at/imm/jaxrs/messwerte/.*', 'g'),
-  new StaleWhileRevalidate({
+  new CacheFirst({
     cacheName: 'api-cache',
     plugins: [
       new CacheableResponsePlugin({

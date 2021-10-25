@@ -28,12 +28,18 @@ export function createUrls(days: number, station:string, component:string, proxy
     const proxyDatBis ="2021-10-21%2000:00";
 
     let urls = [];
-    getDates(days).map((date) => {
-        urls.push(
-            `${proxy ? proxyUrl : "https://www2.land-oberoesterreich.gv.at/"}imm/jaxrs/messwerte/json?datvon=${proxy ? proxyDatVon: date.dateFrom}&datbis=${proxy ? proxyDatBis : date.dateTo}&stationcode=${station}&komponentencode=${component}`
-        );
-        return true;
-    });
+    
+    if (days > 0) {
+        getDates(days).map((date) => {
+            urls.push(
+                `${proxy ? proxyUrl : "https://www2.land-oberoesterreich.gv.at/"}imm/jaxrs/messwerte/json?datvon=${proxy ? proxyDatVon: date.dateFrom}&datbis=${proxy ? proxyDatBis : date.dateTo}&stationcode=${station}&komponentencode=${component}`
+            );
+            return true;
+        });        
+    }
+    else {
+        urls.push(`${proxy ? proxyUrl : "https://www2.land-oberoesterreich.gv.at/"}imm/jaxrs/messwerte/json?&stationcode=${station}&komponentencode=${component}`);
+    }
 
     return urls;
 };
